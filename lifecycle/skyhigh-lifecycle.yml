@@ -1,0 +1,14 @@
+generated: '2026-07-21'
+method: searched
+source: https://success.skyhighsecurity.com/Skyhigh_SSE_APIs/Skyhigh_Security_SSE_APIs
+versioning:
+  scheme: uri-path
+  current: v1
+  example: /shnapi/rest/external/api/v1/queryIncidents
+  docs: https://success.skyhighsecurity.com/Skyhigh_SSE_APIs/Skyhigh_Security_SSE_APIs
+status_page: https://status.skyhighsecurity.com/
+deprecation:
+  policy_url: null
+  sunset_header: false
+  note: No published deprecation/sunset policy located for the SSE REST APIs.
+deprecated_operations: []

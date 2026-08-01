@@ -1,0 +1,19 @@
+generated: '2026-07-21'
+method: searched
+source: https://www.skyhighsecurity.com/about/certification.html
+url: https://www.skyhighsecurity.com/about/certification.html
+certifications:
+  - SOC 2 Type II
+  - ISO/IEC 27001
+  - FedRAMP High
+  - DoD Impact Level (IL2 & IL4)
+  - CSA STAR Level 1
+  - IRAP PROTECTED
+  - BSI C5
+  - GDPR
+  - DPDPA
+  - DORA
+evidence:
+  - source: https://www.skyhighsecurity.com/about/certification.html
+    keywords: [soc 2 type ii, iso/iec 27001, fedramp high, csa star, irap, bsi c5, gdpr, dora]
+    note: Certifications & Compliance hub with a filterable compliance portfolio by region and vertical.

@@ -1,0 +1,59 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/skyhigh-incidents-openapi-original.yml
+entities:
+  - name: Incident
+    description: A DLP / policy incident recorded by the Skyhigh SSE platform.
+  - name: IncidentGroup
+    description: A grouping of incidents by incidentType and optional category.
+  - name: IncidentCategory
+    description: Category classification within an incident type.
+  - name: IncidentInformationKeysByType
+    description: The set of Incident.information keys available for a given incident type.
+  - name: Criteria
+    description: Query filter (startTime, endTime, actorIds, serviceNames, incidentCriteria).
+  - name: IncidentCriteria
+    description: Incident-specific filter nested inside Criteria.
+  - name: ChangeRequest
+    description: A requested modification to one or more incidents.
+  - name: IncidentChangeRequest
+    description: A single incident change request.
+  - name: IncidentChangeRequests
+    description: A batch of incident change requests.
+  - name: IncidentResponse
+    description: Response envelope wrapping an array of incidents plus responseInfo.
+  - name: ResponseInfo
+    description: Pagination/continuation and error info (nextStartTime, error).
+  - name: KeyValue
+    description: Generic key/value pair used within incident information maps.
+  - name: Error
+    description: Custom error object (code, message, target, details[]).
+relationships:
+  - from: IncidentResponse
+    to: Incident
+    type: has_many
+    via: incidents
+  - from: IncidentResponse
+    to: ResponseInfo
+    type: has_one
+    via: responseInfo
+  - from: IncidentGroup
+    to: IncidentCategory
+    type: has_many
+    via: category
+  - from: Criteria
+    to: IncidentCriteria
+    type: has_one
+    via: incidentCriteria
+  - from: IncidentChangeRequests
+    to: IncidentChangeRequest
+    type: has_many
+    via: changeRequests
+  - from: Incident
+    to: KeyValue
+    type: has_many
+    via: information
+  - from: Error
+    to: Error
+    type: has_many
+    via: details

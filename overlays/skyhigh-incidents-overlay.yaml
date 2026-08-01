@@ -1,0 +1,28 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Skyhigh Security SSE Incidents API
+  version: 1.0.0
+extends: openapi/skyhigh-incidents-openapi-original.yml
+actions:
+  - target: $.info
+    update:
+      x-apievangelist-rating: 3
+      x-apievangelist-notes: >-
+        Real Swagger 2.0 harvested from the Skyhigh Security success portal.
+        Auth is IAM bearer-token via a Basic-auth token exchange; regional
+        data-residency hosts (US/EU/CA/Gov); cursor-time pagination via
+        responseInfo.nextStartTime.
+  - target: $.info
+    update:
+      x-regional-hosts:
+        - {region: US-PROD, host: https://www.myshn.net}
+        - {region: EU-PROD, host: https://www.myshn.eu}
+        - {region: CA-PROD, host: https://www.myshn.ca}
+        - {region: Fed/Gov, host: https://www.govshn.net}
+  - target: $.paths['/v1/queryIncidents'].post
+    update:
+      x-pagination:
+        style: cursor-time
+        limit_default: 100
+        limit_max: 10000
+        continuation_field: responseInfo.nextStartTime

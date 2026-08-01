@@ -1,0 +1,32 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/skyhigh-incidents-openapi-original.yml
+summary:
+  types:
+  - apiKey
+  - http
+  - oauth2
+  api_key_in:
+  - query
+  oauth2_flows:
+  - implicit
+schemes:
+- name: basicAuth
+  type: http
+  scheme: basic
+  sources:
+  - openapi/skyhigh-incidents-openapi-original.yml
+- name: internalApiKey
+  type: apiKey
+  in: query
+  parameter: accessToken
+  sources:
+  - openapi/skyhigh-incidents-openapi-original.yml
+- name: tenantAuth
+  type: oauth2
+  flows:
+  - flow: implicit
+    authorizationUrl: http://com.shn/api/oauth/dialog
+    scopes: 3
+  sources:
+  - openapi/skyhigh-incidents-openapi-original.yml

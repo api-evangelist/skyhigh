@@ -1,0 +1,28 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/skyhigh-incidents-openapi-original.yml
+schemes:
+- name: tenantAuth
+  source: openapi/skyhigh-incidents-openapi-original.yml
+  flows:
+  - flow: implicit
+    authorizationUrl: http://com.shn/api/oauth/dialog
+scopes:
+- scope: read:data
+  description: Grants read access to all URL data used by authorized tenant.
+  flows:
+  - implicit
+  sources:
+  - openapi/skyhigh-incidents-openapi-original.yml
+- scope: read:users
+  description: Grants read access to all users within authorized tenant.
+  flows:
+  - implicit
+  sources:
+  - openapi/skyhigh-incidents-openapi-original.yml
+- scope: write:users
+  description: Grants read/write access to all users within authorized tenant.
+  flows:
+  - implicit
+  sources:
+  - openapi/skyhigh-incidents-openapi-original.yml

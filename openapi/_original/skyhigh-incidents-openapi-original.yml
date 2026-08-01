@@ -1,0 +1,638 @@
+# this is the official documentation for SkyhighNetworks 'external' APIs
+swagger: '2.0'
+info:
+  title: Skyhigh Networks External APIs
+  description: Security at high speed.
+  termsOfService: https://www.skyhighnetworks.com/terms/
+  contact:
+    name: API Support
+    email: support_skyhigh@mcafee.com
+    url: https://cloudsecurity.mcafee.com/cloud/en-us/forms/contact.html
+  license:
+    # license covers the release of API definitions in this document
+    name: Creative Commons 4.0 International
+    url: http://creativecommons.org/licenses/by/4.0/
+  version: 1.0.0
+schemes:
+  - https
+# skyhigh domain that serves API definitions
+host: www.myshn.net
+# indicates API RESTful endpoints
+basePath: /shnapi/rest/external/api
+consumes:
+  - application/json
+produces:
+  - application/json
+
+# http status error code used:
+#   200: Response information and an array of user risks.
+#   400: Bad request where some provided parameters have invalid field values.
+#   401: Not authorized to request data.
+#   404: No data was found for provided criteria.
+#   409: Concurrency conflict, resubmit again once verified request is still current.
+#   429: Too many requests exceeding rate-limiting thresholds. Resubmit after traffic is reduced.
+#   500: An internal server error occurred while executing the request.
+#   503: Unable to process request at this time, try again later.
+
+# security definitions
+securityDefinitions:
+  basicAuth:
+    type: basic
+  internalApiKey:
+    type: apiKey
+    name: accessToken
+    in: query
+  tenantAuth:
+    type: oauth2
+    authorizationUrl: http://com.shn/api/oauth/dialog
+    flow: implicit
+    scopes:
+      read:data: Grants read access to all URL data used by authorized tenant.
+      read:users: Grants read access to all users within authorized tenant.
+      write:users: Grants read/write access to all users within authorized tenant.
+
+# list of all requests/responses maintained in alphabetic order (ignoring versioning)
+paths:
+
+  /v1/modifyIncidents:
+    post:
+      summary: Modifies incidents
+      description: |
+        For _**authenticated tenant**_, modifies a list of incidents by changing provided fields and values.
+          ```
+          URL example --
+          https://www.myshn.net/shnapi/rest/external/api/v1/modifyIncidents
+          ```
+          ```
+          Payload example --
+          [
+            {
+              "incidentId":"ANO-1234",
+              "changeRequests":{
+                "WORKFLOW_STATUS":"RESOLVED"
+              }
+            },
+            {
+              {
+              "incidentId":"AUD-4567",
+              "changeRequests":{
+                "WORKFLOW_STATUS":"OPENED"
+              }
+            },
+            ...
+          ]
+          ```
+      operationId: v1ModifyIncidents
+      security:
+        - internalApiKey: []
+        - tenantAuth:
+          - write:users
+      parameters:
+        - name: incidentChangeRequests
+          description: A list of incident change requests.
+          in: body
+          schema:
+            $ref: '#/definitions/IncidentChangeRequests'
+      tags:
+        - Tenant
+      responses:
+        default:
+          description: Response information. Check responseInfo --> error for any unexpected errors or warnings.
+          schema:
+            $ref: '#/definitions/ResponseInfo'
+
+  /v1/queryIncidentGroups:
+    post:
+      summary: Retrieves incident group names
+      description: |
+        For _**authenticated tenant**_, retrieves a list of incident group IDs with corresponding incident group (incidentType.category.name).
+          ```
+          URL example --
+          https://www.myshn.net/shnapi/rest/external/api/v1/queryIncidentGroups
+          ```
+      operationId: v1QueryIncidentGroups
+      security:
+        - internalApiKey: []
+        - tenantAuth:
+          - read:data
+      tags:
+        - Tenant
+      responses:
+        '200':
+          description: |
+            ```
+            {
+              "headers": {},
+              "body": [
+                "Alert.Access.AnomalousAccessLocation",
+                "Alert.Access.BruteForceLogin",
+                ...
+                ],
+              "statusCode": "OK",
+              "statusCodeValue": 200
+            }
+            ```
+
+  /v1/queryIncidentInformationKeys:
+    post:
+      summary: Retrieves list of Incident.information keys
+      description: |
+        For _**authenticated tenant**_, retrieves a list of keys to access values from the Incident.information map.
+          ```
+          URL example --
+          https://www.myshn.net/shnapi/rest/external/api/v1/queryIncidentInformationKeys
+          ```
+      operationId: v1QueryIncidentInformationKeys
+      security:
+        - internalApiKey: []
+        - tenantAuth:
+          - read:data
+      tags:
+        - Tenant
+      responses:
+        '200':
+          description: |
+            ```
+            {
+              "headers": {},
+              "body": [
+                {
+                "type": "AuditViolation",
+                "informationKeys": {
+                  "accountId": "account id that was being audited",
+                  "category": "category that the audit violation belongs to",
+                  ...
+                  },
+                }
+              ]
+              "statusCode": "OK",
+              "statusCodeValue": 200
+            }
+            ```
+
+  /v1/queryIncidents:
+    post:
+      summary: Retrieves incidents
+      description: |
+        For _**authenticated tenant**_, retrieves a list of incidents in ascending time modified order.
+          ```
+          URL example --
+          https://www.myshn.net/shnapi/rest/external/api/v1/queryIncidents?limit=500
+          ```
+          ```
+          Payload example --
+          {
+            "startTime":"2016-12-15T00:00:00Z",
+            "endTime":"2017-01-23T00:00:00Z",
+            "createdSinceStartTime":true,
+            "actorIds":["name1@shn.net","name2@gmail.com"],
+            "serviceNames":["Service1","Service2"],
+            "incidentCriteria":{
+              "categories":[
+                {"incidentType":"Threat"},
+                {"incidentType":"Alert","category":"Policy"}
+              ]
+            }
+          }
+          ```
+      operationId: v1QueryIncidents
+      security:
+        - internalApiKey: []
+        - tenantAuth:
+          - read:data
+      parameters:
+        - name: limit
+          description: Maximum number of items that will be returned within a single response. If value exceeds maximum '10000' it will not be flagged as an error but will also not increase results.
+          in: query
+          type: integer
+          format: int32
+          default: 100
+          minimum: 1
+          maximum: 10000
+        - name: criteria
+          description: Criteria to filter the response data with. Be sure to set required startTime as beginning time of incidents to retrieve. 
+            The criteria fields that can be used for this query are :== [ startTime | endTime | actorIds | serviceNames | incidentCriteria ]
+          in: body
+          schema:
+            $ref: '#/definitions/Criteria'
+      tags:
+        - Tenant
+      responses:
+        default:
+          description: Response information and an array of incidents in ascending time modified order starting at startTime within Criteria. Check responseInfo --> error for any unexpected errors or warnings. Use nextStartTime within responseInfo for continuation of this query in next request.
+          schema:
+            $ref: '#/definitions/IncidentResponse'
+
+# list of all POJO objects maintained in alphabetic order
+definitions:
+
+  ChangeRequest:
+    description: A map where the keys are the names of the field to be modified by the corresponding new value provided. Values for changeable key names are :== [ WORKFLOW_STATUS ].
+    type: object
+    additionalProperties:
+      description: The new value to modify the field identified by the key.
+      type: string
+
+  Criteria:
+    description: Request object informing system of request filtering criteria.
+    type: object
+    properties:
+      startTime:
+        description: Filter for starting date-time, inclusive. Default (empty) :== now. Format :== yyyy-mm-ddThh:mm:ss[Z([+-]hh:mm)]
+        type: string
+        format: date-time
+        example: 2016-06-15T00:00:00Z
+      endTime:
+        description: Filter for ending date-time, exclusive. Default (empty) :== now. Format :== yyyy-mm-ddThh:mm:ss[Z([+-]hh:mm)]
+        type: string
+        format: date-time
+        example: 2016-06-15T00:00:00-08:00
+      actorIdType:
+        description: Filter events based on the inclusive actor identifier type recorded. Case sensitive.
+        type: string
+        enum:
+          - USER
+          - IP_ADDRESS
+      actorIds:
+        description: List of inclusive actor identifiers which are either user name or IP address (may be tokenized depending on product configuration) that will be applied to limit response. Empty list implies all users and IP addresses for authenticated tenant.
+        type: array
+        items:
+          type: string
+      createdSinceStartTime:
+        description: Deprecated -- use timeSelection instead.  If set true will compare startTime and endTime against the timeCreated of incidents. Otherwise, the default behavior is to compare against the timeModified of incidents.
+        type: boolean
+      deviceTypes:
+        description: Filter events based on selected list of inclusive device types. Default (empty) :== all.  Case sensitive values :==
+          [ AndroidMobile
+          | BlackberryMobile
+          | iPadMobile
+          | iPhoneMobile
+          | iPodMobile
+          | JavaApplication
+          | LinuxDesktop
+          | MacDesktop
+          | PlaystationGaming
+          | SymbianMobile
+          | WiiGaming
+          | WindowsDesktop
+          | WindowsPhoneMobile
+          | Unknown
+          ]
+        type: array
+        items:
+          type: string
+      incidentCriteria:
+        $ref: '#/definitions/IncidentCriteria'
+      permissionType:
+        description: Filter events based on whether the event was allowed or not. Case sensitive.
+        type: string
+        enum:
+          - ALLOWED
+          - DENIED
+      protocolTypes:
+        description: Filter events based on list of inclusive protocol used. The values for protocols are kept in a database table; here are some case sensitive values :==
+          [ dns
+          | http
+          | https
+          | ntp
+          | Unknown
+          ]
+        type: array
+        items:
+          type: string
+      serviceCategories:
+        description: Filter events based on list of inclusive service categories used. The values for categories are kept in a database table; here are some case sensitive values :==
+          [ Backup and Archiving
+          | Business Intelligence
+          | Cloud Infrastructure
+          | Cloud Storage
+          | Collaboration
+          | Content Sharing
+          | CRM
+          | Development
+          | e-Commerce
+          | ERP
+          | Finance
+          | Health Care
+          | HR
+          | IaaS Admin Console
+          | IT Services
+          | Legal
+          | Logistics
+          | Marketing
+          | Media
+          | Networking
+          | Procurement
+          | Project Management
+          | Security
+          | Service Desk and Support
+          | Service Proxy
+          | Social Media
+          | Tracking
+          | Uncategorized
+          | Virtual Data Rooms
+          | Web Application
+          ]
+        type: array
+        items:
+          type: string
+      serviceNames:
+        description: List of inclusive service names that will be applied to restrict the response. Empty list implies all services of the authenticated tenant.
+        type: array
+        items:
+          type: string
+      serviceRiskMaximum:
+        description: Filter events with service risk scores at or greater than this value, inclusive. Higher values reflect more risk. Value must be >= serviceRiskMinimum.
+        type: integer
+        format: int32
+        default: 10
+        minimum: 0
+        maximum: 10
+      serviceRiskMinimum:
+        description: Filter events with service risk scores at or less than this value, inclusive.  Higher values reflect more risk. Value must be <= serviceRiskMaximum.
+        type: integer
+        format: int32
+        default: 0
+        minimum: 0
+        maximum: 10
+      timesSelection:
+        description: The way to chose which times will be used for startTime and endTime. Default (empty) :== LAST_MODIFIED_AT.
+        type: string
+        enum:
+          - CREATED_AT
+          - LAST_MODIFIED_AT
+        default: LAST_MODIFIED_AT
+      uploadDataMinimum:
+        description: Filter events to those that have at least upload data of this minimum size, inclusive.
+        type: integer
+        format: int64
+      userRiskMaximum:
+        description: Filter events with user risk scores at or greater than this value, inclusive. Higher values reflect more risk. Value must be >= userRiskMinimum.
+        type: integer
+        format: int32
+        default: 10
+        minimum: 0
+        maximum: 10
+      userRiskMinimum:
+        description: Filter events with user risk scores at or less than this value, inclusive.  Higher values reflect more risk. Value must be <= userRiskMaximum.
+        type: integer
+        format: int32
+        default: 0
+        minimum: 0
+        maximum: 10
+
+  Error:
+    description: Unexpected error code & description.
+    type: object
+    properties:
+      code:
+        description: HTTP status codes :== 2xx success, 4xx client error, or 5xx server error.
+        type: integer
+        format: int32
+        minimum: 100
+        maximum: 600
+        example: 400
+      message:
+        description: English equivalence of HTTP status code used.
+        type: string
+        example: Invalid field
+      target:
+        description: Optional comma-separated field name(s) with issue to resolve.
+        type: string
+        example: fieldName
+      details:
+        description: Additional smaller errors that caused the main error.
+        type: array
+        items:
+          $ref: '#/definitions/Error'
+
+  Incident:
+    description: The incident.
+    type: object
+    properties:
+      activityNames:
+        description: List of names of activities that caused the incident.
+        type: array
+        items:
+          type: string
+        example: Upload Over Time
+      actorId:
+        description: Actor identifier that was involved in the incident which may either be user name or IP address (may be tokenized depending on product configuration); see actorIdType.
+        type: string
+        example: sam@corp.com
+      actorIdType:
+        description: Indicates if the actor identifier is user name or IP address.
+        type: string
+        enum:
+          - User
+          - IpAddress
+      incidentGroup:
+        description: Concatenated incidentType.category.name fields.
+        type: string
+        example: threat.insiderThreat.highVolumeDataExfiltration
+      incidentId:
+        description: Unique identifier for this particular incident. The incident ID prefixes :==
+          [ ANO - sanctioned anomaly
+          | APP - consolidated app violation
+          | AUD - audit violation
+          | CAP - cloud access policy violation
+          | DLP - data loss policy violation
+          | EPO - ePO violation
+          | MAL - malware violation
+          | SHW - shadow anomaly
+          | THR - threat
+          ]
+        type: string
+        example: ANO-1234
+      incidentRiskScore:
+        description: Risk score associated with the incident.
+        type: number
+        format: double
+      incidentRiskSeverity:
+        description: Indication showing amount of risk involved in the incident.
+          Values ::= [ low | medium | high ]
+        type: string
+      information:
+        description: List of other key:value pairs that are associated with the incident. For a list of the keys, use the queryIncidentInformationKeys command.
+        type: array
+        items:
+          $ref: '#/definitions/KeyValue'
+      responses:
+        description: List of actionable responses for the incident.
+        type: array
+        items:
+          type: string
+        example: Quarantine
+      serviceNames:
+        description: List of names of services that were involved in the incident.
+        type: array
+        items:
+          type: string
+        example: google
+      status:
+        description: Current state of incident.
+          Values ::= [ new | opened | false positive | resolved | suppressed | archived ]
+        type: string
+      timeCreated:
+        description: Time the incident was created. Format :== yyyy-mm-ddThh:mm:ss.sssZ
+        type: string
+        format: date-time
+        example: 2016-06-15T00:00:00.000Z
+      timeModified:
+        description: Time the incident was last modified. Start time and end time filters work with this modified time. Format :== yyyy-mm-ddThh:mm:ss.sssZ
+        type: string
+        format: date-time
+        example: 2016-06-15T00:00:00.000Z
+
+  IncidentCategory:
+    description: Identifies an incident group by incidentType and category for purposes of filtering.  The incidentType is required. Category is optional, if not provided then all categories for incidentType will be included.
+    type: object
+    properties:
+      incidentType:
+        description: A type of incident. Case sensitive values ::=
+          [ Alert
+          | Threat
+          ]
+        type: string
+      category:
+        description: Qualifying category within incidentType; categories are only valid for parenthesized incidentType. Case sensitive values ::=
+          [ Access (Alert)
+          | Admin (Alert)
+          | Audit (Alert)
+          | CompromisedAccount (Threat)
+          | Data (Alert)
+          | InsiderThreat (Threat)
+          | Policy (Alert)
+          | PrivilegeAccess (Threat)
+          ]
+        type: string
+
+  IncidentChangeRequests:
+    description: A list of incident ids with corresponding change requests.
+    type: array
+    items:
+      $ref: '#/definitions/IncidentChangeRequest'
+
+  IncidentChangeRequest:
+    description: An incident id with corresponding change requests.
+    type: object
+    properties:
+      incidentId:
+        description: Unique identifier for a particular incident. The incident ID prefixes :==
+          [ ANO - Sanctioned anomaly
+          | APP - consolidated app violation
+          | AUD - audit violation
+          | CAP - cloud access policy violation
+          | DLP - data loss policy violation
+          | EPO - ePO violation
+          | MAL - malware violation
+          | SHW - Shadow anomaly
+          | THR - threat
+          ]
+        type: string
+        example: ANO-1234
+      changeRequests:
+        description: A map of change requests with the key being field name and the value being new value to set on said field.
+        type: array
+        items:
+          $ref: '#/definitions/ChangeRequest'
+        example: 
+          WORKFLOW_STATUS: RESOLVED
+
+  IncidentCriteria:
+    description: Request criteria informing system of inclusive incident filtering. Only one of the two properties (categories or incidentGroupIds) may be specified per request.
+    type: object
+    properties:
+      categories:
+        description: Inclusively filter incidents based on a incident group of incidentType and category.
+        type: array
+        items:
+          $ref: '#/definitions/IncidentCategory'
+      incidentGroupIds:
+        description: Inclusively filter incidents based on incident group IDs. IDs are used instead of names to allow for Skyhigh or tenants to uniquely identify incident groups.  In order to get the current active incident group IDs for your account use the queryIncidentGroupIds API provided.
+        type: array
+        items:
+          type: integer
+          format: int32
+      product:
+        description: Inclusively filter incidents based on the product.
+        type: string
+        enum:
+          - SANCTIONED
+          - SHADOW
+        default: SANCTIONED
+
+  IncidentGroup:
+    description: Identifies an incident group for purposes of filtering.
+    type: object
+    properties:
+      incidentGroup:
+        description: Concatenated incidentType.category.name.
+        type: string
+        example: Threat.InsiderThreat.HighRiskDataExfiltration
+
+  IncidentInformationKeysByType:
+    description: The list of information keys available per incident type. The information keys consist of two fields, key ::= key to access value from information map, and value ::= description of the value that will be retrieved.
+    type: object
+    properties:
+      type:
+        description: Type of incident. Values :==
+          [ AuditViolation (Alert.Policy.Audit)
+          | PolicyViolation (Alert.Policy.Dlp)
+          | SanctionedAnomaly (Alert...)
+          | ShadowAnomaly (Alert...)
+          | Threat (Threat...) ]
+        type: string
+      informationKeys:
+        type: array
+        items:
+          $ref: '#/definitions/KeyValue'
+
+  IncidentResponse:
+    description: The response info and incidents.
+    type: object
+    properties:
+      responseInfo:
+        $ref: '#/definitions/ResponseInfo'
+      incidents:
+        type: array
+        items:
+          $ref: '#/definitions/Incident'
+
+  KeyValue:
+    description: A pair of key and value (standard map entry).
+    type: object
+    properties:
+      key:
+        description: Name of value.
+        type: string
+      value:
+        description: Actual value.
+        type: object
+  
+  ResponseInfo:
+    description: Additional information regarding the response.
+    type: object
+    properties:
+      actualLimit:
+        description: Number of items being returned in this response.
+        type: integer
+        format: int32
+      apiElapsedMillis:
+        description: Number of milliseconds this response took to execute internally.
+        type: integer
+        format: int64
+      error:
+        $ref: '#/definitions/Error'
+      nextOffset:
+        description: Offset to be passed as parameter 'offset' to read next block of current query. If nextOffset set to '-1' then there are no more entries to be read. In time-based queries this field will be set to 'null'.
+        type: integer
+        format: int64
+      nextStartTime:
+        description: Starting time to be passed as Criteria 'startTime' to read next block continuing current query. This value will be set to 'null' if not a time-based query. Format :== yyyy-mm-ddThh:mm:ss[Z([+-]hh:mm)].
+        type: string
+        format: date-time
+        example: 2016-06-15T00:00:00Z
+      source:
+        description: An identifier of the host(s) that were involved in gathering the response. FOR DEBUG PURPOSES.
+        type: string

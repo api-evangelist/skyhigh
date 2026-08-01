@@ -1,0 +1,23 @@
+# Skyhigh Security
+
+> Skyhigh Security is a cloud-native Security Service Edge (SSE) platform — CASB, Secure Web Gateway (SWG), DLP/Advanced DLP, ZTNA, and DSPM — that protects enterprise data across web, cloud, and private applications. Its REST APIs (the "SSE APIs", served from the myshn.net regional hosts) let customers manage users, query and modify DLP/policy incidents, and pull forensics data.
+
+## APIs
+- [Skyhigh SSE APIs](https://success.skyhighsecurity.com/Skyhigh_SSE_APIs/Skyhigh_Security_SSE_APIs): REST APIs for the Security Service Edge platform (User Management, Incidents, Forensics).
+- [Incidents API](https://success.skyhighsecurity.com/Skyhigh_SSE_APIs/Incidents_API/Incidents_API_Knowledge_Base): Query and modify DLP/policy incidents.
+- [User Management API](https://success.skyhighsecurity.com/Skyhigh_SSE_APIs/User_Management_API/User_Creation_API): Create and manage tenant users.
+
+## Specs
+- [Incidents OpenAPI (Swagger 2.0)](https://raw.githubusercontent.com/api-evangelist/skyhigh/refs/heads/main/openapi/skyhigh-incidents-openapi-original.yml): 4 operations (queryIncidents, queryIncidentGroups, queryIncidentInformationKeys, modifyIncidents).
+
+## Auth
+- Base path: /shnapi/rest/external/api ; regional hosts www.myshn.net (US), www.myshn.eu (EU), www.myshn.ca (CA), www.govshn.net (Gov).
+- Token: POST /shnapi/rest/external/api/v1/token?grant_type=password&token_type=iam (HTTP Basic) -> Authorization: Bearer <token>.
+- See authentication/skyhigh-authentication.yml and conventions/skyhigh-conventions.yml.
+
+## Docs
+- [Developer / API knowledge base](https://success.skyhighsecurity.com/Skyhigh_SSE_APIs/Skyhigh_Security_SSE_APIs)
+- [GitHub organization](https://github.com/SkyhighSecurity)
+- [Certifications & Compliance](https://www.skyhighsecurity.com/about/certification.html)
+- [Status page](https://status.skyhighsecurity.com/)
+- [Support](https://www.skyhighsecurity.com/support.html)

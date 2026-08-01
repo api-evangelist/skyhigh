@@ -1,0 +1,14 @@
+{
+  "provider": "skyhigh",
+  "sources": [
+    "skyhigh-tenant-api-openapi.yml"
+  ],
+  "outputs": [
+    "skyhigh-tenant-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

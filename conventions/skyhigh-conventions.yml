@@ -1,0 +1,61 @@
+generated: '2026-07-21'
+method: searched
+source: https://success.skyhighsecurity.com/Skyhigh_SSE_APIs/Skyhigh_Security_SSE_APIs
+notes: >-
+  Cross-cutting request/response semantics for the Skyhigh Security SSE (Security
+  Service Edge) REST APIs, derived from the published Incidents swagger and the
+  SSE API knowledge base. Cross-links authentication/, errors/, lifecycle/.
+authentication:
+  style: bearer-token
+  description: >-
+    Obtain an IAM access token via POST /shnapi/rest/external/api/v1/token
+    (grant_type=password&token_type=iam) using Basic Auth with Skyhigh CASB
+    credentials, then pass it as `Authorization: Bearer <access-token>` on
+    subsequent calls. Some deployments also require a BPS-TENANT-ID header.
+  token_endpoint: /shnapi/rest/external/api/v1/token
+  ref: authentication/skyhigh-authentication.yml
+regional_hosts:
+  description: The tenant is pinned to a regional data-residency host; use the matching base URL.
+  hosts:
+    - {region: US-PROD, host: https://www.myshn.net}
+    - {region: EU-PROD, host: https://www.myshn.eu}
+    - {region: CA-PROD, host: https://www.myshn.ca}
+    - {region: Fed/Gov, host: https://www.govshn.net}
+base_path: /shnapi/rest/external/api
+versioning:
+  style: uri-path
+  current: v1
+  example: /shnapi/rest/external/api/v1/queryIncidents
+idempotency:
+  supported: false
+  note: >-
+    No documented idempotency-key mechanism. Query operations use POST with a
+    Criteria body and are naturally repeatable; modify operations are not
+    idempotency-key protected.
+pagination:
+  style: cursor-time
+  params:
+    limit:
+      in: query
+      default: 100
+      maximum: 10000
+      note: Values above the maximum are silently capped, not rejected.
+    criteria.startTime: Required lower time bound for the query window.
+    criteria.endTime: Optional upper time bound.
+  continuation:
+    field: responseInfo.nextStartTime
+    note: Feed nextStartTime back as startTime in the next request to page forward.
+filtering:
+  object: Criteria
+  fields: [startTime, endTime, actorIds, serviceNames, incidentCriteria]
+tenancy:
+  header: BPS-TENANT-ID
+  note: Tenant-scoped; certain deployments require the tenant id header alongside the token.
+error_envelope:
+  format: custom
+  fields: [code, message, target, details]
+  ref: errors/skyhigh-problem-types.yml
+rate_limiting:
+  signal: HTTP 429 Too Many Requests
+  note: Resubmit after reducing traffic; no documented quota headers.
+content_type: application/json

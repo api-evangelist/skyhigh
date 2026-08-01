@@ -1,0 +1,7 @@
+generated: '2026-07-21'
+method: generated
+skills:
+  - file: skyhigh-query-incidents.md
+    name: Query Skyhigh SSE incidents
+    api: openapi/skyhigh-incidents-openapi-original.yml
+    operations: [v1QueryIncidentGroups, v1QueryIncidentInformationKeys, v1QueryIncidents]

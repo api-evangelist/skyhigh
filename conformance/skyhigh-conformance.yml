@@ -1,0 +1,52 @@
+generated: '2026-07-21'
+method: searched
+source: https://www.skyhighsecurity.com/about/certification.html
+standards:
+  - id: oauth2
+    conforms: true
+    evidence: openapi securityDefinitions declares an oauth2 (implicit flow) scheme (tenantAuth)
+  - id: http-basic-auth
+    conforms: true
+    evidence: token endpoint uses HTTP Basic auth; securityDefinitions declares basicAuth
+  - id: rfc9457-problem-details
+    conforms: false
+    evidence: errors use a custom {code,message,target,details} envelope, not application/problem+json
+  - id: rest
+    conforms: true
+    evidence: synchronous client-server CRUD over HTTPS, JSON in/out
+  - id: soc2-type-ii
+    conforms: true
+    evidence: SOC 2 Type II covering the complete SSE cloud platform (certification page)
+  - id: iso-27001
+    conforms: true
+    evidence: ISO/IEC 27001 certification listed on certification page
+  - id: fedramp-high
+    conforms: true
+    evidence: FedRAMP High Authorization (CASB, SWG for Cloud, DLP) and DoD IL2/IL4
+  - id: csa-star
+    conforms: true
+    evidence: CSA STAR Level 1 certification
+  - id: gdpr
+    conforms: true
+    evidence: GDPR compliance listed
+  - id: irap
+    conforms: true
+    evidence: IRAP PROTECTED assessment for Australian Government cloud
+  - id: bsi-c5
+    conforms: true
+    evidence: BSI C5 (German Federal Office for Information Security) attestation
+  - id: dora
+    conforms: true
+    evidence: EU Digital Operational Resilience Act alignment for financial sector
+compliance_programs:
+  - SOC 2 Type II
+  - ISO/IEC 27001
+  - FedRAMP High
+  - DoD Impact Level (IL2 & IL4)
+  - CSA STAR Level 1
+  - IRAP PROTECTED
+  - BSI C5
+  - GDPR
+  - DPDPA
+  - DORA
+compliance_page: https://www.skyhighsecurity.com/about/certification.html

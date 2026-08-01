@@ -1,0 +1,43 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/skyhigh-incidents-openapi-original.yml
+format: custom
+envelope:
+  description: >-
+    Errors are returned in a custom Error object (not RFC 9457). The response body
+    carries an Error with an HTTP-status code, an English message, an optional
+    target field, and a nested details[] array of smaller contributing errors.
+    Query responses also surface warnings/errors via responseInfo.error.
+  fields:
+    code: HTTP status code (2xx success, 4xx client error, 5xx server error)
+    message: English equivalent of the HTTP status code used
+    target: Optional comma-separated field name(s) with the issue to resolve
+    details: Array of additional smaller errors that caused the main error
+problems:
+  - status: 200
+    title: OK
+    detail: Response information and an array of incidents/users returned.
+  - status: 400
+    title: Bad request
+    detail: Some provided parameters have invalid field values.
+  - status: 401
+    title: Not authorized
+    detail: Not authorized to request data (invalid or missing access token).
+  - status: 404
+    title: Not found
+    detail: No data was found for the provided criteria.
+  - status: 409
+    title: Concurrency conflict
+    detail: Resubmit once verified the request is still current.
+  - status: 429
+    title: Too many requests
+    detail: Rate-limiting threshold exceeded; resubmit after traffic is reduced.
+  - status: 500
+    title: Internal server error
+    detail: An internal server error occurred while executing the request.
+  - status: 503
+    title: Service unavailable
+    detail: Unable to process request at this time; try again later.
+source_operations:
+  - openapi/skyhigh-incidents-openapi-original.yml#v1QueryIncidents
+  - openapi/skyhigh-incidents-openapi-original.yml#v1ModifyIncidents
