@@ -1,0 +1,433 @@
+{
+  "item": [
+    {
+      "id": "ebb8f34f-8e1f-4cc4-8994-b2dfc9e36e71",
+      "name": "Tenant",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "c5324cf2-75ea-4098-88d9-fefb8e318ec8",
+          "name": "Modifies incidents",
+          "request": {
+            "name": "Modifies incidents",
+            "description": {
+              "content": "For _**authenticated tenant**_, modifies a list of incidents by changing provided fields and values.\n  ```\n  URL example --\n  https://www.myshn.net/shnapi/rest/external/api/v1/modifyIncidents\n  ```\n  ```\n  Payload example --\n  [\n    {\n      \"incidentId\":\"ANO-1234\",\n      \"changeRequests\":{\n        \"WORKFLOW_STATUS\":\"RESOLVED\"\n      }\n    },\n    {\n      {\n      \"incidentId\":\"AUD-4567\",\n      \"changeRequests\":{\n        \"WORKFLOW_STATUS\":\"OPENED\"\n      }\n    },\n    ...\n  ]\n  ```\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "modifyIncidents"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "accessToken"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "query"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  {\n    \"incidentId\": \"<string>\",\n    \"changeRequests\": [\n      {\n        \"key_0\": \"<string>\",\n        \"key_1\": \"<string>\"\n      },\n      {\n        \"key_0\": \"<string>\"\n      }\n    ]\n  },\n  {\n    \"incidentId\": \"<string>\",\n    \"changeRequests\": [\n      {\n        \"key_0\": \"<string>\"\n      },\n      {\n        \"key_0\": \"<string>\",\n        \"key_1\": \"<string>\",\n        \"key_2\": \"<string>\"\n      }\n    ]\n  }\n]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "5a032971-1976-4e17-85d1-589d3458abb1",
+              "name": "Response information. Check responseInfo --> error for any unexpected errors or warnings.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "modifyIncidents"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "accessToken",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"incidentId\": \"ANO-1234\",\n    \"changeRequests\": [\n      {\n        \"key_0\": \"<string>\",\n        \"key_1\": \"<string>\",\n        \"key_2\": \"<string>\"\n      },\n      {\n        \"key_0\": \"<string>\",\n        \"key_1\": \"<string>\",\n        \"key_2\": \"<string>\",\n        \"key_3\": \"<string>\"\n      }\n    ]\n  },\n  {\n    \"incidentId\": \"ANO-1234\",\n    \"changeRequests\": [\n      {\n        \"key_0\": \"<string>\",\n        \"key_1\": \"<string>\"\n      },\n      {\n        \"key_0\": \"<string>\"\n      }\n    ]\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"actualLimit\": 6889,\n  \"apiElapsedMillis\": 793,\n  \"error\": {\n    \"code\": 400,\n    \"message\": \"Invalid field\",\n    \"target\": \"fieldName\",\n    \"details\": [\n      {\n        \"value\": \"<Circular reference to #/components/schemas/Error detected>\"\n      },\n      {\n        \"value\": \"<Circular reference to #/components/schemas/Error detected>\"\n      }\n    ]\n  },\n  \"nextOffset\": 8329,\n  \"nextStartTime\": \"2016-06-15 00:00:00+00:00\",\n  \"source\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8438fa7e-cea7-47a3-91e7-d7f0e95175ac",
+          "name": "Retrieves incident group names",
+          "request": {
+            "name": "Retrieves incident group names",
+            "description": {
+              "content": "For _**authenticated tenant**_, retrieves a list of incident group IDs with corresponding incident group (incidentType.category.name).\n  ```\n  URL example --\n  https://www.myshn.net/shnapi/rest/external/api/v1/queryIncidentGroups\n  ```\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "queryIncidentGroups"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "accessToken"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "query"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "cc587d42-2435-4852-98a8-be2e557e3981",
+              "name": "```\n{\n  \"headers\": {},\n  \"body\": [\n    \"Alert.Access.AnomalousAccessLocation\",\n    \"Alert.Access.BruteForceLogin\",\n    ...\n    ],\n  \"statusCode\": \"OK\",\n  \"statusCodeValue\": 200\n}\n```\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "queryIncidentGroups"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "accessToken",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e7ffbb37-48df-4d6c-b308-6eba181103a3",
+          "name": "Retrieves list of Incident.information keys",
+          "request": {
+            "name": "Retrieves list of Incident.information keys",
+            "description": {
+              "content": "For _**authenticated tenant**_, retrieves a list of keys to access values from the Incident.information map.\n  ```\n  URL example --\n  https://www.myshn.net/shnapi/rest/external/api/v1/queryIncidentInformationKeys\n  ```\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "queryIncidentInformationKeys"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "accessToken"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "query"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "5193ab43-b445-428a-a6c8-e3d08ac450a6",
+              "name": "```\n{\n  \"headers\": {},\n  \"body\": [\n    {\n    \"type\": \"AuditViolation\",\n    \"informationKeys\": {\n      \"accountId\": \"account id that was being audited\",\n      \"category\": \"category that the audit violation belongs to\",\n      ...\n      },\n    }\n  ]\n  \"statusCode\": \"OK\",\n  \"statusCodeValue\": 200\n}\n```\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "queryIncidentInformationKeys"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "accessToken",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7bdd304d-b1ce-4e46-a97a-6b64dd981bf3",
+          "name": "Retrieves incidents",
+          "request": {
+            "name": "Retrieves incidents",
+            "description": {
+              "content": "For _**authenticated tenant**_, retrieves a list of incidents in ascending time modified order.\n  ```\n  URL example --\n  https://www.myshn.net/shnapi/rest/external/api/v1/queryIncidents?limit=500\n  ```\n  ```\n  Payload example --\n  {\n    \"startTime\":\"2016-12-15T00:00:00Z\",\n    \"endTime\":\"2017-01-23T00:00:00Z\",\n    \"createdSinceStartTime\":true,\n    \"actorIds\":[\"name1@shn.net\",\"name2@gmail.com\"],\n    \"serviceNames\":[\"Service1\",\"Service2\"],\n    \"incidentCriteria\":{\n      \"categories\":[\n        {\"incidentType\":\"Threat\"},\n        {\"incidentType\":\"Alert\",\"category\":\"Policy\"}\n      ]\n    }\n  }\n  ```\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "queryIncidents"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "100",
+                  "description": "Maximum number of items that will be returned within a single response. If value exceeds maximum '10000' it will not be flagged as an error but will also not increase results."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "accessToken"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "query"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"startTime\": \"<dateTime>\",\n  \"endTime\": \"<dateTime>\",\n  \"actorIdType\": \"<string>\",\n  \"actorIds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"createdSinceStartTime\": \"<boolean>\",\n  \"deviceTypes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"incidentCriteria\": {\n    \"categories\": [\n      {\n        \"incidentType\": \"<string>\",\n        \"category\": \"<string>\"\n      },\n      {\n        \"incidentType\": \"<string>\",\n        \"category\": \"<string>\"\n      }\n    ],\n    \"incidentGroupIds\": [\n      \"<integer>\",\n      \"<integer>\"\n    ],\n    \"product\": \"SANCTIONED\"\n  },\n  \"permissionType\": \"<string>\",\n  \"protocolTypes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"serviceCategories\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"serviceNames\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"serviceRiskMaximum\": 10,\n  \"serviceRiskMinimum\": 0,\n  \"timesSelection\": \"LAST_MODIFIED_AT\",\n  \"uploadDataMinimum\": \"<long>\",\n  \"userRiskMaximum\": 10,\n  \"userRiskMinimum\": 0\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ef888dfc-dfdb-4b27-b239-cde7cc752455",
+              "name": "Response information and an array of incidents in ascending time modified order starting at startTime within Criteria. Check responseInfo --> error for any unexpected errors or warnings. Use nextStartTime within responseInfo for continuation of this query in next request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "queryIncidents"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "100"
+                    },
+                    {
+                      "key": "accessToken",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"startTime\": \"2016-06-15 00:00:00+00:00\",\n  \"endTime\": \"2016-06-15 00:00:00-08:00\",\n  \"actorIdType\": \"<string>\",\n  \"actorIds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"createdSinceStartTime\": \"<boolean>\",\n  \"deviceTypes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"incidentCriteria\": {\n    \"categories\": [\n      {\n        \"incidentType\": \"<string>\",\n        \"category\": \"<string>\"\n      },\n      {\n        \"incidentType\": \"<string>\",\n        \"category\": \"<string>\"\n      }\n    ],\n    \"incidentGroupIds\": [\n      \"<integer>\",\n      \"<integer>\"\n    ],\n    \"product\": \"SANCTIONED\"\n  },\n  \"permissionType\": \"<string>\",\n  \"protocolTypes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"serviceCategories\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"serviceNames\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"serviceRiskMaximum\": 10,\n  \"serviceRiskMinimum\": 0,\n  \"timesSelection\": \"LAST_MODIFIED_AT\",\n  \"uploadDataMinimum\": \"<long>\",\n  \"userRiskMaximum\": 10,\n  \"userRiskMinimum\": 0\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"responseInfo\": {\n    \"actualLimit\": 4186,\n    \"apiElapsedMillis\": 6269,\n    \"error\": {\n      \"code\": 400,\n      \"message\": \"Invalid field\",\n      \"target\": \"fieldName\",\n      \"details\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/Error detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/Error detected>\"\n        }\n      ]\n    },\n    \"nextOffset\": 3770,\n    \"nextStartTime\": \"2016-06-15 00:00:00+00:00\",\n    \"source\": \"string\"\n  },\n  \"incidents\": [\n    {\n      \"activityNames\": [\n        \"string\",\n        \"string\"\n      ],\n      \"actorId\": \"sam@corp.com\",\n      \"actorIdType\": \"User\",\n      \"incidentGroup\": \"threat.insiderThreat.highVolumeDataExfiltration\",\n      \"incidentId\": \"ANO-1234\",\n      \"incidentRiskScore\": 191.0660957266519,\n      \"incidentRiskSeverity\": \"string\",\n      \"information\": [\n        {\n          \"key\": \"string\",\n          \"value\": {}\n        },\n        {\n          \"key\": \"string\",\n          \"value\": {}\n        }\n      ],\n      \"responses\": [\n        \"string\",\n        \"string\"\n      ],\n      \"serviceNames\": [\n        \"string\",\n        \"string\"\n      ],\n      \"status\": \"string\",\n      \"timeCreated\": \"2016-06-15 00:00:00+00:00\",\n      \"timeModified\": \"2016-06-15 00:00:00+00:00\"\n    },\n    {\n      \"activityNames\": [\n        \"string\",\n        \"string\"\n      ],\n      \"actorId\": \"sam@corp.com\",\n      \"actorIdType\": \"IpAddress\",\n      \"incidentGroup\": \"threat.insiderThreat.highVolumeDataExfiltration\",\n      \"incidentId\": \"ANO-1234\",\n      \"incidentRiskScore\": 5926.138165421921,\n      \"incidentRiskSeverity\": \"string\",\n      \"information\": [\n        {\n          \"key\": \"string\",\n          \"value\": {}\n        },\n        {\n          \"key\": \"string\",\n          \"value\": {}\n        }\n      ],\n      \"responses\": [\n        \"string\",\n        \"string\"\n      ],\n      \"serviceNames\": [\n        \"string\",\n        \"string\"\n      ],\n      \"status\": \"string\",\n      \"timeCreated\": \"2016-06-15 00:00:00+00:00\",\n      \"timeModified\": \"2016-06-15 00:00:00+00:00\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://www.myshn.net/shnapi/rest/external/api",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "f8235e2f-154a-4e46-bdc6-fe5227873b2c",
+    "name": "Skyhigh Networks External APIs Tenant API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Security at high speed.\n\nContact Support:\n Name: API Support\n Email: support_skyhigh@mcafee.com",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Skyhigh Networks External APIs Tenant API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Tenant",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Modifies incidents",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/modifyIncidents"
+          },
+          "docs": "For _**authenticated tenant**_, modifies a list of incidents by changing provided fields and values.\n  ```\n  URL example --\n  https://www.myshn.net/shnapi/rest/external/api/v1/modifyIncidents\n  ```\n  ```\n  Payload example --\n  [\n    {\n      \"incidentId\":\"ANO-1234\",\n      \"changeRequests\":{\n        \"WORKFLOW_STATUS\":\"RESOLVED\"\n      }\n    },\n    {\n      {\n      \"incidentId\":\"AUD-4567\",\n      \"changeRequests\":{\n        \"WORKFLOW_STATUS\":\"OPENED\"\n      }\n    },\n    ...\n  ]\n  ```\n"
+        },
+        {
+          "info": {
+            "name": "Retrieves incident group names",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/queryIncidentGroups"
+          },
+          "docs": "For _**authenticated tenant**_, retrieves a list of incident group IDs with corresponding incident group (incidentType.category.name).\n  ```\n  URL example --\n  https://www.myshn.net/shnapi/rest/external/api/v1/queryIncidentGroups\n  ```\n"
+        },
+        {
+          "info": {
+            "name": "Retrieves list of Incident.information keys",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/queryIncidentInformationKeys"
+          },
+          "docs": "For _**authenticated tenant**_, retrieves a list of keys to access values from the Incident.information map.\n  ```\n  URL example --\n  https://www.myshn.net/shnapi/rest/external/api/v1/queryIncidentInformationKeys\n  ```\n"
+        },
+        {
+          "info": {
+            "name": "Retrieves incidents",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/queryIncidents",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items that will be returned within a single response. If value exceeds maximum '10000' it will not be flagged as an error but will also not increase results."
+              }
+            ]
+          },
+          "docs": "For _**authenticated tenant**_, retrieves a list of incidents in ascending time modified order.\n  ```\n  URL example --\n  https://www.myshn.net/shnapi/rest/external/api/v1/queryIncidents?limit=500\n  ```\n  ```\n  Payload example --\n  {\n    \"startTime\":\"2016-12-15T00:00:00Z\",\n    \"endTime\":\"2017-01-23T00:00:00Z\",\n    \"createdSinceStartTime\":true,\n    \"actorIds\":[\"name1@shn.net\",\"name2@gmail.com\"],\n    \"serviceNames\":[\"Service1\",\"Service2\"],\n    \"incidentCriteria\":{\n      \"categories\":[\n        {\"inc"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

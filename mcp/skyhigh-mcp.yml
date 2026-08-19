@@ -2,23 +2,28 @@ generated: '2026-07-21'
 method: derived
 status: candidate
 source: openapi/skyhigh-incidents-openapi-original.yml
-note: >-
-  No official hosted/remote Skyhigh Security MCP server found. Candidate tool list
-  derived one-to-one from the published Incidents API operations. Bind IAM bearer
-  auth and the tenant's regional host before use.
+note: No official hosted/remote Skyhigh Security MCP server found. Candidate tool list derived one-to-one
+  from the published Incidents API operations. Bind IAM bearer auth and the tenant's regional host before
+  use.
 server:
   name: skyhigh-incidents
   transport: http
 tools:
-  - name: query_incidents
-    description: Retrieve incidents in ascending time-modified order for a Criteria window.
-    source_operation: openapi/skyhigh-incidents-openapi-original.yml#v1QueryIncidents
-  - name: query_incident_groups
-    description: List incident types and categories available for filtering.
-    source_operation: openapi/skyhigh-incidents-openapi-original.yml#v1QueryIncidentGroups
-  - name: query_incident_information_keys
-    description: Retrieve the Incident.information keys available for an incident type.
-    source_operation: openapi/skyhigh-incidents-openapi-original.yml#v1QueryIncidentInformationKeys
-  - name: modify_incidents
-    description: Submit change requests to modify one or more incidents.
-    source_operation: openapi/skyhigh-incidents-openapi-original.yml#v1ModifyIncidents
+- name: query_incidents
+  description: Retrieve incidents in ascending time-modified order for a Criteria window.
+  source_operation: openapi/skyhigh-incidents-openapi-original.yml#v1QueryIncidents
+- name: query_incident_groups
+  description: List incident types and categories available for filtering.
+  source_operation: openapi/skyhigh-incidents-openapi-original.yml#v1QueryIncidentGroups
+- name: query_incident_information_keys
+  description: Retrieve the Incident.information keys available for an incident type.
+  source_operation: openapi/skyhigh-incidents-openapi-original.yml#v1QueryIncidentInformationKeys
+- name: modify_incidents
+  description: Submit change requests to modify one or more incidents.
+  source_operation: openapi/skyhigh-incidents-openapi-original.yml#v1ModifyIncidents
+deployment:
+  mode: none
+  verified: derived
+  tools: 4
+  checked: '2026-08-12'
+  source: catalog MCP census
