@@ -1,16 +1,16 @@
 ---
 kin_checks:
   slug: skyhigh
-  schema_version: 0.18.2
-  scored_at: '2026-09-04'
-  run_ts: 2026-09-04T062714
+  schema_version: 0.21.0
+  scored_at: '2026-09-12'
+  run_ts: 2026-09-12T080032
   note: Actionable checks only (missed + partial). earned/na are every other check
-    in rubric/scoring-0.18.2.yml; counts below let you verify that.
+    in rubric/scoring-0.21.0.yml; counts below let you verify that.
   counts:
-    total: 132
+    total: 136
     earned: 36
-    partial: 6
-    missed: 64
+    partial: 7
+    missed: 67
     na: 26
   checks:
   - id: multiple_apis
@@ -76,9 +76,6 @@ kin_checks:
     status: missed
   - id: change_log_present
     status: missed
-  - id: status_page_present
-    status: missed
-    detail: pointer liveness 0.0
   - id: rate_limits_documented
     status: missed
   - id: rate_limits_rich
@@ -123,6 +120,14 @@ kin_checks:
     status: missed
   - id: reg_privacy_policy
     status: missed
+  - id: upsert_outcome_discriminator
+    status: missed
+  - id: upsert_alternate_key
+    status: missed
+  - id: upsert_named
+    status: missed
+  - id: upsert_declared_conflict
+    status: missed
   - id: reversibility_documented
     status: missed
   - id: mcp_server
@@ -151,6 +156,10 @@ kin_checks:
     status: missed
   - id: agentic_commerce
     status: missed
+  - id: status_page_present
+    status: partial
+    earned: 3.0
+    detail: pointer liveness 0.5
   - id: github_org_present
     status: partial
     earned: 1.0
