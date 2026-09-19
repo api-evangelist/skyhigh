@@ -62,6 +62,8 @@ apis:
     https://success.skyhighsecurity.com/Skyhigh_SSE_APIs/Incidents_API/Incidents_API_Knowledge_Base
   baseURL: https://www.myshn.net/shnapi/rest/external/api
   tags:
+  - Tenants
+  tags_raw:
   - Tenant
   properties:
   - type: OpenAPI
