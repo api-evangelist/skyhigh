@@ -1,7 +1,7 @@
 {
   "provider": "skyhigh",
   "sources": [
-    "skyhigh-tenant-api-openapi.yml"
+    "_original/skyhigh-incidents-openapi-original.yml"
   ],
   "outputs": [
     "skyhigh-tenant-api-openapi.yml"
@@ -9,6 +9,13 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "skyhigh-incidents-openapi-original.yml: upgraded swagger 2.0 -> OpenAPI 3.2.0",
+    "skyhigh-incidents-openapi-original.yml: declared missing tag: Tenant",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "skyhigh-tenant-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

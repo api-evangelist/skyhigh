@@ -1,7 +1,18 @@
 generated: '2026-07-21'
 method: searched
 host: https://www.myshn.net
-documents:
+secondary_host:
+  host: https://www.skyhighsecurity.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 403
+  - path: /.well-known/openid-configuration
+    status: 403
+notes: No /.well-known/ discovery surface published on either the API host (www.myshn.net) or the marketing
+  host. Recorded for auditability; no WellKnown/SecurityTxt pointer wired.
+hosts:
+- host: https://www.myshn.net
+  documents:
   - path: /.well-known/security.txt
     status: 404
   - path: /.well-known/openid-configuration
@@ -12,14 +23,8 @@ documents:
     status: 404
   - path: /.well-known/ai-plugin.json
     status: 404
-secondary_host:
-  host: https://www.skyhighsecurity.com
-  documents:
-    - path: /.well-known/security.txt
-      status: 403
-    - path: /.well-known/openid-configuration
-      status: 403
-notes: >-
-  No /.well-known/ discovery surface published on either the API host
-  (www.myshn.net) or the marketing host. Recorded for auditability; no
-  WellKnown/SecurityTxt pointer wired.
+x-shape-fix:
+  converted: '2026-08-20'
+  from: documents
+  note: Rewritten into hosts[] -> documents[], the only shape well_known_docs() in score.rb reads. A served
+    .well-known surface recorded in any other shape scores as absent.
