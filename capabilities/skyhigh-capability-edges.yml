@@ -1,0 +1,25 @@
+slug: skyhigh
+provider: Skyhigh Security
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 1
+edges:
+- tag: Tenant
+  spec_file: skyhigh-tenant-api-openapi.yml
+  capability_id: BC-620.30
+  capability_id_l1: BC-620
+  capability_name: Threat Detection & Response Management
+  confidence: 0.8
+  evidence: 'POST /v1/queryIncidents  Retrieves incidents; POST /v1/modifyIncidents  Modifies incidents;
+    schemas: IncidentCategory, IncidentCriteria'
+  reason: Despite the 'Tenant' tag, the operations query and modify security incidents on an SSE/DLP platform,
+    which is security threat detection and incident response, not tenant provisioning.
