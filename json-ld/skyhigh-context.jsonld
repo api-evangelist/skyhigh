@@ -1,0 +1,216 @@
+{
+  "@context": {
+    "@vocab": "https://skyhighsecurity.com/schema#",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "skyhigh": "https://skyhighsecurity.com/schema#",
+    "IncidentChangeRequest": "skyhigh:IncidentChangeRequest",
+    "incidentId": {
+      "@id": "skyhigh:incidentId",
+      "@type": "xsd:string"
+    },
+    "changeRequests": {
+      "@id": "skyhigh:changeRequests",
+      "@container": "@list"
+    },
+    "ResponseInfo": "skyhigh:ResponseInfo",
+    "actualLimit": {
+      "@id": "skyhigh:actualLimit",
+      "@type": "xsd:integer"
+    },
+    "apiElapsedMillis": {
+      "@id": "skyhigh:apiElapsedMillis",
+      "@type": "xsd:integer"
+    },
+    "error": {
+      "@id": "skyhigh:error",
+      "@type": "@id"
+    },
+    "nextOffset": {
+      "@id": "skyhigh:nextOffset",
+      "@type": "xsd:integer"
+    },
+    "nextStartTime": {
+      "@id": "skyhigh:nextStartTime",
+      "@type": "xsd:dateTime"
+    },
+    "source": {
+      "@id": "skyhigh:source",
+      "@type": "xsd:string"
+    },
+    "IncidentResponse": "skyhigh:IncidentResponse",
+    "responseInfo": {
+      "@id": "skyhigh:responseInfo",
+      "@type": "@id"
+    },
+    "incidents": {
+      "@id": "skyhigh:incidents",
+      "@container": "@list"
+    },
+    "IncidentCategory": "skyhigh:IncidentCategory",
+    "incidentType": {
+      "@id": "skyhigh:incidentType",
+      "@type": "xsd:string"
+    },
+    "category": {
+      "@id": "skyhigh:category",
+      "@type": "xsd:string"
+    },
+    "Criteria": "skyhigh:Criteria",
+    "startTime": {
+      "@id": "skyhigh:startTime",
+      "@type": "xsd:dateTime"
+    },
+    "endTime": {
+      "@id": "skyhigh:endTime",
+      "@type": "xsd:dateTime"
+    },
+    "actorIdType": {
+      "@id": "skyhigh:actorIdType",
+      "@type": "xsd:string"
+    },
+    "actorIds": {
+      "@id": "skyhigh:actorIds",
+      "@container": "@list"
+    },
+    "createdSinceStartTime": {
+      "@id": "skyhigh:createdSinceStartTime",
+      "@type": "xsd:boolean"
+    },
+    "deviceTypes": {
+      "@id": "skyhigh:deviceTypes",
+      "@container": "@list"
+    },
+    "incidentCriteria": {
+      "@id": "skyhigh:incidentCriteria",
+      "@type": "@id"
+    },
+    "permissionType": {
+      "@id": "skyhigh:permissionType",
+      "@type": "xsd:string"
+    },
+    "protocolTypes": {
+      "@id": "skyhigh:protocolTypes",
+      "@container": "@list"
+    },
+    "serviceCategories": {
+      "@id": "skyhigh:serviceCategories",
+      "@container": "@list"
+    },
+    "serviceNames": {
+      "@id": "skyhigh:serviceNames",
+      "@container": "@list"
+    },
+    "serviceRiskMaximum": {
+      "@id": "skyhigh:serviceRiskMaximum",
+      "@type": "xsd:integer"
+    },
+    "serviceRiskMinimum": {
+      "@id": "skyhigh:serviceRiskMinimum",
+      "@type": "xsd:integer"
+    },
+    "timesSelection": {
+      "@id": "skyhigh:timesSelection",
+      "@type": "xsd:string"
+    },
+    "uploadDataMinimum": {
+      "@id": "skyhigh:uploadDataMinimum",
+      "@type": "xsd:integer"
+    },
+    "userRiskMaximum": {
+      "@id": "skyhigh:userRiskMaximum",
+      "@type": "xsd:integer"
+    },
+    "userRiskMinimum": {
+      "@id": "skyhigh:userRiskMinimum",
+      "@type": "xsd:integer"
+    },
+    "Error": "skyhigh:Error",
+    "code": {
+      "@id": "skyhigh:code",
+      "@type": "xsd:integer"
+    },
+    "message": {
+      "@id": "skyhigh:message",
+      "@type": "xsd:string"
+    },
+    "target": {
+      "@id": "skyhigh:target",
+      "@type": "xsd:string"
+    },
+    "details": {
+      "@id": "skyhigh:details",
+      "@container": "@list"
+    },
+    "IncidentCriteria": "skyhigh:IncidentCriteria",
+    "categories": {
+      "@id": "skyhigh:categories",
+      "@container": "@list"
+    },
+    "incidentGroupIds": {
+      "@id": "skyhigh:incidentGroupIds",
+      "@container": "@list"
+    },
+    "product": {
+      "@id": "skyhigh:product",
+      "@type": "xsd:string"
+    },
+    "Incident": "skyhigh:Incident",
+    "activityNames": {
+      "@id": "skyhigh:activityNames",
+      "@container": "@list"
+    },
+    "actorId": {
+      "@id": "skyhigh:actorId",
+      "@type": "xsd:string"
+    },
+    "incidentGroup": {
+      "@id": "skyhigh:incidentGroup",
+      "@type": "xsd:string"
+    },
+    "incidentRiskScore": {
+      "@id": "skyhigh:incidentRiskScore",
+      "@type": "xsd:decimal"
+    },
+    "incidentRiskSeverity": {
+      "@id": "skyhigh:incidentRiskSeverity",
+      "@type": "xsd:string"
+    },
+    "information": {
+      "@id": "skyhigh:information",
+      "@container": "@list"
+    },
+    "responses": {
+      "@id": "skyhigh:responses",
+      "@container": "@list"
+    },
+    "status": {
+      "@id": "skyhigh:status",
+      "@type": "xsd:string"
+    },
+    "timeCreated": {
+      "@id": "skyhigh:timeCreated",
+      "@type": "xsd:dateTime"
+    },
+    "timeModified": {
+      "@id": "skyhigh:timeModified",
+      "@type": "xsd:dateTime"
+    },
+    "KeyValue": "skyhigh:KeyValue",
+    "key": {
+      "@id": "skyhigh:key",
+      "@type": "xsd:string"
+    },
+    "value": {
+      "@id": "skyhigh:value"
+    }
+  },
+  "@type": "schema:Dataset",
+  "schema:name": "Skyhigh Security API JSON-LD context",
+  "schema:description": "A JSON-LD @context for the objects Skyhigh Security's own API contract declares: one class per component schema, one property per declared field, typed from the contract. Derived by script (derive-json-ld.py, 2026-10-04) from openapi/skyhigh-tenant-api-openapi.yml.",
+  "dcterms:created": "2026-10-04",
+  "dcterms:source": [
+    "openapi/skyhigh-tenant-api-openapi.yml"
+  ]
+}

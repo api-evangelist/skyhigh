@@ -1,0 +1,123 @@
+generated: '2026-10-04'
+method: derived
+source: the pre-flight dossier, apis.yml pointers, spec servers, well-known, vendors -- nothing fetched here
+generator: derive-hosts.py
+summary:
+  hosts: 9
+  own: 5
+  other_domain: 3
+  platform: 1
+  roles:
+  - api
+  - identity
+  - other
+  - portal
+  - source
+  - status
+  - website
+hosts:
+- host: api.myshn.net
+  found_by:
+  - contract-discovery
+  types: []
+  serves: []
+  registrable_domain: myshn.net
+  role: api
+  relation: other-domain
+- host: api.skyhighsecurity.com
+  found_by:
+  - contract-discovery
+  types: []
+  serves: []
+  registrable_domain: skyhighsecurity.com
+  role: api
+  relation: own
+- host: careers.skyhighsecurity.com
+  found_by:
+  - probed
+  - site-links
+  - well-known
+  types: []
+  serves: []
+  registrable_domain: skyhighsecurity.com
+  role: other
+  relation: own
+- host: github.com
+  found_by:
+  - pointer
+  types:
+  - GitHubOrganization
+  serves: []
+  registrable_domain: github.com
+  role: source
+  relation: platform
+- host: identity.us.document360.io
+  found_by:
+  - docs-index
+  types: []
+  serves:
+  - docs
+  registrable_domain: document360.io
+  role: identity
+  relation: other-domain
+- host: status.skyhighsecurity.com
+  found_by:
+  - pointer
+  - probed
+  - site-links
+  - well-known
+  types:
+  - StatusPage
+  serves: []
+  registrable_domain: skyhighsecurity.com
+  role: status
+  relation: own
+- host: success.skyhighsecurity.com
+  found_by:
+  - pointer
+  - apis[]
+  - probed
+  - docs-index
+  - contract-discovery
+  - well-known
+  types:
+  - DeveloperPortal
+  - Documentation
+  - APIReference
+  - GettingStarted
+  serves:
+  - docs
+  registrable_domain: skyhighsecurity.com
+  role: portal
+  relation: own
+- host: www.myshn.net
+  found_by:
+  - apis[]
+  - probed
+  - contract-discovery
+  - well-known
+  types: []
+  serves:
+  - api
+  registrable_domain: myshn.net
+  role: other
+  relation: other-domain
+- host: www.skyhighsecurity.com
+  found_by:
+  - pointer
+  - probed
+  - contract-discovery
+  - well-known
+  - vendor-detect
+  types:
+  - Website
+  - Support
+  - Blog
+  - TrustCenter
+  - Compliance
+  serves:
+  - cdn
+  vendor: cloudflare
+  registrable_domain: skyhighsecurity.com
+  role: website
+  relation: own

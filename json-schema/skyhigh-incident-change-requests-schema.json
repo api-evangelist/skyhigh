@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/skyhigh/main/json-schema/skyhigh-incident-change-requests-schema.json",
+  "title": "IncidentChangeRequests",
+  "description": "A list of incident ids with corresponding change requests.",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/skyhigh-tenant-api-openapi.yml#/components/schemas/IncidentChangeRequests",
+  "type": "array",
+  "items": {
+    "$ref": "#/$defs/IncidentChangeRequest"
+  },
+  "$defs": {
+    "ChangeRequest": {
+      "description": "A map where the keys are the names of the field to be modified by the corresponding new value provided. Values for changeable key names are :== [ WORKFLOW_STATUS ].",
+      "type": "object",
+      "additionalProperties": {
+        "description": "The new value to modify the field identified by the key.",
+        "type": "string"
+      }
+    },
+    "IncidentChangeRequest": {
+      "description": "An incident id with corresponding change requests.",
+      "type": "object",
+      "properties": {
+        "incidentId": {
+          "description": "Unique identifier for a particular incident. The incident ID prefixes :== [ ANO - Sanctioned anomaly | APP - consolidated app violation | AUD - audit violation | CAP - cloud access policy violation | DLP - data loss policy violation | EPO - ePO violation | MAL - malware violation | SHW - Shadow anomaly | THR - threat ]",
+          "type": "string"
+        },
+        "changeRequests": {
+          "description": "A map of change requests with the key being field name and the value being new value to set on said field.",
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ChangeRequest"
+          }
+        }
+      }
+    }
+  }
+}

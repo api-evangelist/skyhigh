@@ -2,7 +2,7 @@ overlay: 1.0.0
 info:
   title: API Evangelist enhancements for Skyhigh Security SSE Incidents API
   version: 1.0.0
-extends: openapi/skyhigh-incidents-openapi-original.yml
+extends: ../openapi/_original/skyhigh-incidents-openapi-original.yml
 actions:
   - target: $.info
     update:

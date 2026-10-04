@@ -1,0 +1,173 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/skyhigh/main/json-schema/skyhigh-criteria-schema.json",
+  "title": "Criteria",
+  "description": "Request object informing system of request filtering criteria.",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/skyhigh-tenant-api-openapi.yml#/components/schemas/Criteria",
+  "type": "object",
+  "properties": {
+    "startTime": {
+      "description": "Filter for starting date-time, inclusive. Default (empty) :== now. Format :== yyyy-mm-ddThh:mm:ss[Z([+-]hh:mm)]",
+      "type": "string",
+      "format": "date-time"
+    },
+    "endTime": {
+      "description": "Filter for ending date-time, exclusive. Default (empty) :== now. Format :== yyyy-mm-ddThh:mm:ss[Z([+-]hh:mm)]",
+      "type": "string",
+      "format": "date-time"
+    },
+    "actorIdType": {
+      "description": "Filter events based on the inclusive actor identifier type recorded. Case sensitive.",
+      "type": "string",
+      "enum": [
+        "USER",
+        "IP_ADDRESS"
+      ]
+    },
+    "actorIds": {
+      "description": "List of inclusive actor identifiers which are either user name or IP address (may be tokenized depending on product configuration) that will be applied to limit response. Empty list implies all users and IP addresses for authenticated tenant.",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "createdSinceStartTime": {
+      "description": "Deprecated -- use timeSelection instead.  If set true will compare startTime and endTime against the timeCreated of incidents. Otherwise, the default behavior is to compare against the timeModified of incidents.",
+      "type": "boolean"
+    },
+    "deviceTypes": {
+      "description": "Filter events based on selected list of inclusive device types. Default (empty) :== all.  Case sensitive values :== [ AndroidMobile | BlackberryMobile | iPadMobile | iPhoneMobile | iPodMobile | JavaApplication | LinuxDesktop | MacDesktop | PlaystationGaming | SymbianMobile | WiiGaming | WindowsDesktop | WindowsPhoneMobile | Unknown ]",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "incidentCriteria": {
+      "$ref": "#/$defs/IncidentCriteria"
+    },
+    "permissionType": {
+      "description": "Filter events based on whether the event was allowed or not. Case sensitive.",
+      "type": "string",
+      "enum": [
+        "ALLOWED",
+        "DENIED"
+      ]
+    },
+    "protocolTypes": {
+      "description": "Filter events based on list of inclusive protocol used. The values for protocols are kept in a database table; here are some case sensitive values :== [ dns | http | https | ntp | Unknown ]",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "serviceCategories": {
+      "description": "Filter events based on list of inclusive service categories used. The values for categories are kept in a database table; here are some case sensitive values :== [ Backup and Archiving | Business Intelligence | Cloud Infrastructure | Cloud Storage | Collaboration | Content Sharing | CRM | Development | e-Commerce | ERP | Finance | Health Care | HR | IaaS Admin Console | IT Services | Legal | Logistics | Marketing | Media | Networking | Procurement | Project Management | Security | Service Desk and Support | Service Proxy | Social Media | Tracking | Uncategorized | Virtual Data Rooms | Web Application ]",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "serviceNames": {
+      "description": "List of inclusive service names that will be applied to restrict the response. Empty list implies all services of the authenticated tenant.",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "serviceRiskMaximum": {
+      "description": "Filter events with service risk scores at or greater than this value, inclusive. Higher values reflect more risk. Value must be >= serviceRiskMinimum.",
+      "type": "integer",
+      "format": "int32",
+      "default": 10,
+      "minimum": 0,
+      "maximum": 10
+    },
+    "serviceRiskMinimum": {
+      "description": "Filter events with service risk scores at or less than this value, inclusive.  Higher values reflect more risk. Value must be <= serviceRiskMaximum.",
+      "type": "integer",
+      "format": "int32",
+      "default": 0,
+      "minimum": 0,
+      "maximum": 10
+    },
+    "timesSelection": {
+      "description": "The way to chose which times will be used for startTime and endTime. Default (empty) :== LAST_MODIFIED_AT.",
+      "type": "string",
+      "enum": [
+        "CREATED_AT",
+        "LAST_MODIFIED_AT"
+      ],
+      "default": "LAST_MODIFIED_AT"
+    },
+    "uploadDataMinimum": {
+      "description": "Filter events to those that have at least upload data of this minimum size, inclusive.",
+      "type": "integer",
+      "format": "int64"
+    },
+    "userRiskMaximum": {
+      "description": "Filter events with user risk scores at or greater than this value, inclusive. Higher values reflect more risk. Value must be >= userRiskMinimum.",
+      "type": "integer",
+      "format": "int32",
+      "default": 10,
+      "minimum": 0,
+      "maximum": 10
+    },
+    "userRiskMinimum": {
+      "description": "Filter events with user risk scores at or less than this value, inclusive.  Higher values reflect more risk. Value must be <= userRiskMaximum.",
+      "type": "integer",
+      "format": "int32",
+      "default": 0,
+      "minimum": 0,
+      "maximum": 10
+    }
+  },
+  "$defs": {
+    "IncidentCategory": {
+      "description": "Identifies an incident group by incidentType and category for purposes of filtering.  The incidentType is required. Category is optional, if not provided then all categories for incidentType will be included.",
+      "type": "object",
+      "properties": {
+        "incidentType": {
+          "description": "A type of incident. Case sensitive values ::= [ Alert | Threat ]",
+          "type": "string"
+        },
+        "category": {
+          "description": "Qualifying category within incidentType; categories are only valid for parenthesized incidentType. Case sensitive values ::= [ Access (Alert) | Admin (Alert) | Audit (Alert) | CompromisedAccount (Threat) | Data (Alert) | InsiderThreat (Threat) | Policy (Alert) | PrivilegeAccess (Threat) ]",
+          "type": "string"
+        }
+      }
+    },
+    "IncidentCriteria": {
+      "description": "Request criteria informing system of inclusive incident filtering. Only one of the two properties (categories or incidentGroupIds) may be specified per request.",
+      "type": "object",
+      "properties": {
+        "categories": {
+          "description": "Inclusively filter incidents based on a incident group of incidentType and category.",
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/IncidentCategory"
+          }
+        },
+        "incidentGroupIds": {
+          "description": "Inclusively filter incidents based on incident group IDs. IDs are used instead of names to allow for Skyhigh or tenants to uniquely identify incident groups.  In order to get the current active incident group IDs for your account use the queryIncidentGroupIds API provided.",
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "product": {
+          "description": "Inclusively filter incidents based on the product.",
+          "type": "string",
+          "enum": [
+            "SANCTIONED",
+            "SHADOW"
+          ],
+          "default": "SANCTIONED"
+        }
+      }
+    }
+  }
+}

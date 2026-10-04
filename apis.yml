@@ -1,22 +1,18 @@
 aid: skyhigh
 name: Skyhigh Security
-description: >-
-  Skyhigh Security is a cloud-native Security Service Edge (SSE) platform that protects
-  enterprise data across web, cloud, and private applications. Its portfolio spans Cloud
-  Access Security Broker (CASB), Secure Web Gateway (SWG), Data Loss Prevention (DLP and
-  Advanced DLP), Zero Trust Network Access (ZTNA), and Data Security Posture Management
-  (DSPM). Skyhigh exposes REST "SSE APIs" (served from regional myshn.net hosts) for user
-  management, querying and modifying DLP/policy incidents, and forensics reporting, secured
-  with IAM bearer tokens. Formerly the cloud business of McAfee Enterprise / MVISION Cloud,
-  Skyhigh Security is a Greylock-backed cybersecurity company holding FedRAMP High, SOC 2
+description: Skyhigh Security is a cloud-native Security Service Edge (SSE) platform that protects enterprise data across web, cloud, and private
+  applications. Its portfolio spans Cloud Access Security Broker (CASB), Secure Web Gateway (SWG), Data Loss Prevention (DLP and Advanced DLP),
+  Zero Trust Network Access (ZTNA), and Data Security Posture Management (DSPM). Skyhigh exposes REST "SSE APIs" (served from regional myshn.net
+  hosts) for user management, querying and modifying DLP/policy incidents, and forensics reporting, secured with IAM bearer tokens. Formerly the
+  cloud business of McAfee Enterprise / MVISION Cloud, Skyhigh Security is a Greylock-backed cybersecurity company holding FedRAMP High, SOC 2
   Type II, and ISO/IEC 27001 authorizations.
 url: https://raw.githubusercontent.com/api-evangelist/skyhigh/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
 x-backed-by:
 - greylock
-x-tier: stub
-x-tier-reason: portfolio-lead
+x-tier: profiled
+x-tier-reason: enrichment pass 2026-10-04 (modular-v1; was portfolio-lead)
 deliveryModel:
   model: unknown
   open_source: false
@@ -58,8 +54,7 @@ apis:
 - aid: skyhigh:skyhigh-tenant-api
   name: Skyhigh Security Tenant API
   description: The Tenant API from Skyhigh Security — 4 operation(s) for tenant.
-  humanURL: >-
-    https://success.skyhighsecurity.com/Skyhigh_SSE_APIs/Incidents_API/Incidents_API_Knowledge_Base
+  humanURL: https://success.skyhighsecurity.com/Skyhigh_SSE_APIs/Incidents_API/Incidents_API_Knowledge_Base
   baseURL: https://www.myshn.net/shnapi/rest/external/api
   tags:
   - Tenants
@@ -68,6 +63,10 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/skyhigh-tenant-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/skyhigh-criteria-schema.json
+  - type: JSONSchema
+    url: json-schema/skyhigh-incident-change-requests-schema.json
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -118,13 +117,24 @@ common:
   url: agentic-access/skyhigh-agentic-access.yml
 - type: X-MCPServerCandidate
   url: mcp/skyhigh-mcp.yml
-  note: 'Renamed from MCPServer 2026-09-03 (roadmap#247): the manifest self-describes as status: candidate — a tool list derived from the published API contracts, not an existing server. The scorer already read the manifest and reported mcp_server correctly; the MCPServer type was crediting the artifact-type surfaces with a server that does not exist.'
+  note: 'Renamed from MCPServer 2026-09-03 (roadmap#247): the manifest self-describes as status: candidate — a tool list derived from the published
+    API contracts, not an existing server. The scorer already read the manifest and reported mcp_server correctly; the MCPServer type was crediting
+    the artifact-type surfaces with a server that does not exist.'
 - type: AgentSkill
   url: skills/_index.yml
 - type: LLMsTxt
   url: llms/skyhigh-llms.txt
+x-coverage:
+  state: unreadable
+  reason: js-rendered-docs
+  detail: Documentation pages are rendered via JavaScript on success.skyhighsecurity.com, preventing machine-readable extraction.
+  evidence:
+  - url: https://success.skyhighsecurity.com/Skyhigh_SSE_APIs/Incidents_API/Incidents_API_Definitions
+    status: 200
+  checked: '2026-10-04'
 x-enrichment:
-  date: '2026-07-21'
+  date: '2026-10-04'
   status: enriched
-  artifacts_added: 16
-  pass: local-v1
+  artifacts_added: 10
+  pass: modular-v1
+  engine: identity=local,contract=local,surfaces=local,docs=local,regulatory=local

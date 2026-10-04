@@ -206,6 +206,12 @@ paths:
         description: Criteria to filter the response data with. Be sure to set required startTime as beginning time of incidents to retrieve. The criteria fields that can be used for this query are :== [ startTime | endTime | actorIds | serviceNames | incidentCriteria ]
 components:
   schemas:
+    ChangeRequest:
+      description: A map where the keys are the names of the field to be modified by the corresponding new value provided. Values for changeable key names are :== [ WORKFLOW_STATUS ].
+      type: object
+      additionalProperties:
+        description: The new value to modify the field identified by the key.
+        type: string
     IncidentChangeRequest:
       description: An incident id with corresponding change requests.
       type: object
@@ -221,52 +227,86 @@ components:
             $ref: '#/components/schemas/ChangeRequest'
           example:
             WORKFLOW_STATUS: RESOLVED
-    ResponseInfo:
-      description: Additional information regarding the response.
+    KeyValue:
+      description: A pair of key and value (standard map entry).
       type: object
       properties:
-        actualLimit:
-          description: Number of items being returned in this response.
-          type: integer
-          format: int32
-        apiElapsedMillis:
-          description: Number of milliseconds this response took to execute internally.
-          type: integer
-          format: int64
-        error:
-          $ref: '#/components/schemas/Error'
-        nextOffset:
-          description: Offset to be passed as parameter 'offset' to read next block of current query. If nextOffset set to '-1' then there are no more entries to be read. In time-based queries this field will be set to 'null'.
-          type: integer
-          format: int64
-        nextStartTime:
-          description: Starting time to be passed as Criteria 'startTime' to read next block continuing current query. This value will be set to 'null' if not a time-based query. Format :== yyyy-mm-ddThh:mm:ss[Z([+-]hh:mm)].
+        key:
+          description: Name of value.
+          type: string
+        value:
+          description: Actual value.
+          type: object
+    Incident:
+      description: The incident.
+      type: object
+      properties:
+        activityNames:
+          description: List of names of activities that caused the incident.
+          type: array
+          items:
+            type: string
+          example: Upload Over Time
+        actorId:
+          description: Actor identifier that was involved in the incident which may either be user name or IP address (may be tokenized depending on product configuration); see actorIdType.
+          type: string
+          example: sam@corp.com
+        actorIdType:
+          description: Indicates if the actor identifier is user name or IP address.
+          type: string
+          enum:
+          - User
+          - IpAddress
+        incidentGroup:
+          description: Concatenated incidentType.category.name fields.
+          type: string
+          example: threat.insiderThreat.highVolumeDataExfiltration
+        incidentId:
+          description: Unique identifier for this particular incident. The incident ID prefixes :== [ ANO - sanctioned anomaly | APP - consolidated app violation | AUD - audit violation | CAP - cloud access policy violation | DLP - data loss policy violation | EPO - ePO violation | MAL - malware violation | SHW - shadow anomaly | THR - threat ]
+          type: string
+          example: ANO-1234
+        incidentRiskScore:
+          description: Risk score associated with the incident.
+          type: number
+          format: double
+        incidentRiskSeverity:
+          description: Indication showing amount of risk involved in the incident. Values ::= [ low | medium | high ]
+          type: string
+        information:
+          description: List of other key:value pairs that are associated with the incident. For a list of the keys, use the queryIncidentInformationKeys command.
+          type: array
+          items:
+            $ref: '#/components/schemas/KeyValue'
+        responses:
+          description: List of actionable responses for the incident.
+          type: array
+          items:
+            type: string
+          example: Quarantine
+        serviceNames:
+          description: List of names of services that were involved in the incident.
+          type: array
+          items:
+            type: string
+          example: google
+        status:
+          description: Current state of incident. Values ::= [ new | opened | false positive | resolved | suppressed | archived ]
+          type: string
+        timeCreated:
+          description: Time the incident was created. Format :== yyyy-mm-ddThh:mm:ss.sssZ
           type: string
           format: date-time
           example: 2016-06-15 00:00:00+00:00
-        source:
-          description: An identifier of the host(s) that were involved in gathering the response. FOR DEBUG PURPOSES.
+        timeModified:
+          description: Time the incident was last modified. Start time and end time filters work with this modified time. Format :== yyyy-mm-ddThh:mm:ss.sssZ
           type: string
-    IncidentResponse:
-      description: The response info and incidents.
-      type: object
-      properties:
-        responseInfo:
-          $ref: '#/components/schemas/ResponseInfo'
-        incidents:
-          type: array
-          items:
-            $ref: '#/components/schemas/Incident'
-    IncidentCategory:
-      description: Identifies an incident group by incidentType and category for purposes of filtering.  The incidentType is required. Category is optional, if not provided then all categories for incidentType will be included.
-      type: object
-      properties:
-        incidentType:
-          description: A type of incident. Case sensitive values ::= [ Alert | Threat ]
-          type: string
-        category:
-          description: Qualifying category within incidentType; categories are only valid for parenthesized incidentType. Case sensitive values ::= [ Access (Alert) | Admin (Alert) | Audit (Alert) | CompromisedAccount (Threat) | Data (Alert) | InsiderThreat (Threat) | Policy (Alert) | PrivilegeAccess (Threat) ]
-          type: string
+          format: date-time
+          example: 2016-06-15 00:00:00+00:00
+    IncidentChangeRequests:
+      description: A list of incident ids with corresponding change requests.
+      type: array
+      items:
+        $ref: '#/components/schemas/IncidentChangeRequest'
     Criteria:
       description: Request object informing system of request filtering criteria.
       type: object
@@ -362,11 +402,28 @@ components:
           default: 0
           minimum: 0
           maximum: 10
-    IncidentChangeRequests:
-      description: A list of incident ids with corresponding change requests.
-      type: array
-      items:
-        $ref: '#/components/schemas/IncidentChangeRequest'
+    IncidentCriteria:
+      description: Request criteria informing system of inclusive incident filtering. Only one of the two properties (categories or incidentGroupIds) may be specified per request.
+      type: object
+      properties:
+        categories:
+          description: Inclusively filter incidents based on a incident group of incidentType and category.
+          type: array
+          items:
+            $ref: '#/components/schemas/IncidentCategory'
+        incidentGroupIds:
+          description: Inclusively filter incidents based on incident group IDs. IDs are used instead of names to allow for Skyhigh or tenants to uniquely identify incident groups.  In order to get the current active incident group IDs for your account use the queryIncidentGroupIds API provided.
+          type: array
+          items:
+            type: integer
+            format: int32
+        product:
+          description: Inclusively filter incidents based on the product.
+          type: string
+          enum:
+          - SANCTIONED
+          - SHADOW
+          default: SANCTIONED
     Error:
       description: Unexpected error code & description.
       type: object
@@ -391,109 +448,52 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Error'
-    ChangeRequest:
-      description: A map where the keys are the names of the field to be modified by the corresponding new value provided. Values for changeable key names are :== [ WORKFLOW_STATUS ].
-      type: object
-      additionalProperties:
-        description: The new value to modify the field identified by the key.
-        type: string
-    IncidentCriteria:
-      description: Request criteria informing system of inclusive incident filtering. Only one of the two properties (categories or incidentGroupIds) may be specified per request.
+    IncidentCategory:
+      description: Identifies an incident group by incidentType and category for purposes of filtering.  The incidentType is required. Category is optional, if not provided then all categories for incidentType will be included.
       type: object
       properties:
-        categories:
-          description: Inclusively filter incidents based on a incident group of incidentType and category.
-          type: array
-          items:
-            $ref: '#/components/schemas/IncidentCategory'
-        incidentGroupIds:
-          description: Inclusively filter incidents based on incident group IDs. IDs are used instead of names to allow for Skyhigh or tenants to uniquely identify incident groups.  In order to get the current active incident group IDs for your account use the queryIncidentGroupIds API provided.
-          type: array
-          items:
-            type: integer
-            format: int32
-        product:
-          description: Inclusively filter incidents based on the product.
+        incidentType:
+          description: A type of incident. Case sensitive values ::= [ Alert | Threat ]
           type: string
-          enum:
-          - SANCTIONED
-          - SHADOW
-          default: SANCTIONED
-    Incident:
-      description: The incident.
+        category:
+          description: Qualifying category within incidentType; categories are only valid for parenthesized incidentType. Case sensitive values ::= [ Access (Alert) | Admin (Alert) | Audit (Alert) | CompromisedAccount (Threat) | Data (Alert) | InsiderThreat (Threat) | Policy (Alert) | PrivilegeAccess (Threat) ]
+          type: string
+    IncidentResponse:
+      description: The response info and incidents.
       type: object
       properties:
-        activityNames:
-          description: List of names of activities that caused the incident.
+        responseInfo:
+          $ref: '#/components/schemas/ResponseInfo'
+        incidents:
           type: array
           items:
-            type: string
-          example: Upload Over Time
-        actorId:
-          description: Actor identifier that was involved in the incident which may either be user name or IP address (may be tokenized depending on product configuration); see actorIdType.
-          type: string
-          example: sam@corp.com
-        actorIdType:
-          description: Indicates if the actor identifier is user name or IP address.
-          type: string
-          enum:
-          - User
-          - IpAddress
-        incidentGroup:
-          description: Concatenated incidentType.category.name fields.
-          type: string
-          example: threat.insiderThreat.highVolumeDataExfiltration
-        incidentId:
-          description: Unique identifier for this particular incident. The incident ID prefixes :== [ ANO - sanctioned anomaly | APP - consolidated app violation | AUD - audit violation | CAP - cloud access policy violation | DLP - data loss policy violation | EPO - ePO violation | MAL - malware violation | SHW - shadow anomaly | THR - threat ]
-          type: string
-          example: ANO-1234
-        incidentRiskScore:
-          description: Risk score associated with the incident.
-          type: number
-          format: double
-        incidentRiskSeverity:
-          description: Indication showing amount of risk involved in the incident. Values ::= [ low | medium | high ]
-          type: string
-        information:
-          description: List of other key:value pairs that are associated with the incident. For a list of the keys, use the queryIncidentInformationKeys command.
-          type: array
-          items:
-            $ref: '#/components/schemas/KeyValue'
-        responses:
-          description: List of actionable responses for the incident.
-          type: array
-          items:
-            type: string
-          example: Quarantine
-        serviceNames:
-          description: List of names of services that were involved in the incident.
-          type: array
-          items:
-            type: string
-          example: google
-        status:
-          description: Current state of incident. Values ::= [ new | opened | false positive | resolved | suppressed | archived ]
-          type: string
-        timeCreated:
-          description: Time the incident was created. Format :== yyyy-mm-ddThh:mm:ss.sssZ
+            $ref: '#/components/schemas/Incident'
+    ResponseInfo:
+      description: Additional information regarding the response.
+      type: object
+      properties:
+        actualLimit:
+          description: Number of items being returned in this response.
+          type: integer
+          format: int32
+        apiElapsedMillis:
+          description: Number of milliseconds this response took to execute internally.
+          type: integer
+          format: int64
+        error:
+          $ref: '#/components/schemas/Error'
+        nextOffset:
+          description: Offset to be passed as parameter 'offset' to read next block of current query. If nextOffset set to '-1' then there are no more entries to be read. In time-based queries this field will be set to 'null'.
+          type: integer
+          format: int64
+        nextStartTime:
+          description: Starting time to be passed as Criteria 'startTime' to read next block continuing current query. This value will be set to 'null' if not a time-based query. Format :== yyyy-mm-ddThh:mm:ss[Z([+-]hh:mm)].
           type: string
           format: date-time
           example: 2016-06-15 00:00:00+00:00
-        timeModified:
-          description: Time the incident was last modified. Start time and end time filters work with this modified time. Format :== yyyy-mm-ddThh:mm:ss.sssZ
+        source:
+          description: An identifier of the host(s) that were involved in gathering the response. FOR DEBUG PURPOSES.
           type: string
-          format: date-time
-          example: 2016-06-15 00:00:00+00:00
-    KeyValue:
-      description: A pair of key and value (standard map entry).
-      type: object
-      properties:
-        key:
-          description: Name of value.
-          type: string
-        value:
-          description: Actual value.
-          type: object
   securitySchemes:
     basicAuth:
       type: http

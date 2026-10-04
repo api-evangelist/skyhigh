@@ -1,0 +1,34 @@
+generated: '2026-10-04'
+method: derived
+source: mcp/skyhigh-mcp.yml
+coverage:
+  coverage: full
+crosswalk:
+  - tool: query_incidents
+    category: incidents
+    rest:
+      - v1QueryIncidents
+    binding: operationId
+    confidence: high
+    note: Derived from MCP tool list and OpenAPI operationId
+  - tool: query_incident_groups
+    category: incidents
+    rest:
+      - v1QueryIncidentGroups
+    binding: operationId
+    confidence: high
+    note: Derived from MCP tool list and OpenAPI operationId
+  - tool: query_incident_information_keys
+    category: incidents
+    rest:
+      - v1QueryIncidentInformationKeys
+    binding: operationId
+    confidence: high
+    note: Derived from MCP tool list and OpenAPI operationId
+  - tool: modify_incidents
+    category: incidents
+    rest:
+      - v1ModifyIncidents
+    binding: operationId
+    confidence: high
+    note: Derived from MCP tool list and OpenAPI operationId

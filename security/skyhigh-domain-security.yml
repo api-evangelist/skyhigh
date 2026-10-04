@@ -1,16 +1,40 @@
-generated: '2026-07-21'
+generated: '2026-10-04'
 method: probed
 source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
 hosts:
 - host: www.skyhighsecurity.com
   https: true
   tls_version: TLSv1.3
-  cert_expires: Aug 26 06:37:02 2026 GMT
+  cert_expires: Dec 22 12:01:45 2026 GMT
   hsts: false
+- host: success.skyhighsecurity.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Nov 25 03:53:57 2026 GMT
+  hsts: true
+  hsts_max_age: 31536000
+- host: www.myshn.net
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Feb  8 21:16:27 2027 GMT
+  hsts: true
+  hsts_max_age: 315360000
 domains:
 - domain: skyhighsecurity.com
   dnssec: false
-  caa: []
+  caa:
+  - 0 issue "letsencrypt.org"
+  - 0 issue "pki.goog"
+  - 0 issue "sectigo.com"
+  - 0 issuewild "amazon.com"
+  - 0 issuewild "letsencrypt.org"
+  - 0 issuewild "pki.goog"
   spf: true
+  dmarc: true
+  dmarc_policy: none
+- domain: myshn.net
+  dnssec: true
+  caa: []
+  spf: false
   dmarc: true
   dmarc_policy: none

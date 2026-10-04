@@ -1,0 +1,68 @@
+generated: '2026-10-04'
+method: derived
+generator: derive-vocabulary.py
+source: openapi/skyhigh-tenant-api-openapi.yml
+vocabulary:
+  name: Skyhigh Security Domain Vocabulary
+  description: 'Terms declared by Skyhigh Security''s own API contract: its resource groups, objects and enumerations, with the contract''s definitions.
+    Derived, not authored.'
+  version: '2026-10-04'
+  terms:
+  - term: IncidentChangeRequest
+    definition: An incident id with corresponding change requests.
+    tags:
+    - Object
+    source: openapi/skyhigh-tenant-api-openapi.yml#/components/schemas/IncidentChangeRequest
+  - term: ResponseInfo
+    definition: Additional information regarding the response.
+    tags:
+    - Object
+    source: openapi/skyhigh-tenant-api-openapi.yml#/components/schemas/ResponseInfo
+  - term: IncidentResponse
+    definition: The response info and incidents.
+    tags:
+    - Object
+    source: openapi/skyhigh-tenant-api-openapi.yml#/components/schemas/IncidentResponse
+  - term: IncidentCategory
+    definition: Identifies an incident group by incidentType and category for purposes of filtering. The incidentType is required. Category is
+      optional, if not provided then all categories for incidentType will be included.
+    tags:
+    - Object
+    source: openapi/skyhigh-tenant-api-openapi.yml#/components/schemas/IncidentCategory
+  - term: Criteria
+    definition: Request object informing system of request filtering criteria.
+    tags:
+    - Object
+    source: openapi/skyhigh-tenant-api-openapi.yml#/components/schemas/Criteria
+  - term: IncidentChangeRequests
+    definition: A list of incident ids with corresponding change requests.
+    tags:
+    - Object
+    source: openapi/skyhigh-tenant-api-openapi.yml#/components/schemas/IncidentChangeRequests
+  - term: Error
+    definition: Unexpected error code & description.
+    tags:
+    - Object
+    source: openapi/skyhigh-tenant-api-openapi.yml#/components/schemas/Error
+  - term: ChangeRequest
+    definition: A map where the keys are the names of the field to be modified by the corresponding new value provided. Values for changeable
+      key names are :== [ WORKFLOW_STATUS ].
+    tags:
+    - Object
+    source: openapi/skyhigh-tenant-api-openapi.yml#/components/schemas/ChangeRequest
+  - term: IncidentCriteria
+    definition: Request criteria informing system of inclusive incident filtering. Only one of the two properties (categories or incidentGroupIds)
+      may be specified per request.
+    tags:
+    - Object
+    source: openapi/skyhigh-tenant-api-openapi.yml#/components/schemas/IncidentCriteria
+  - term: Incident
+    definition: The incident.
+    tags:
+    - Object
+    source: openapi/skyhigh-tenant-api-openapi.yml#/components/schemas/Incident
+  - term: KeyValue
+    definition: A pair of key and value (standard map entry).
+    tags:
+    - Object
+    source: openapi/skyhigh-tenant-api-openapi.yml#/components/schemas/KeyValue
