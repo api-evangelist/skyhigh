@@ -38,7 +38,7 @@ accessModel:
   method: derived
 specificationVersion: '0.23'
 created: '2026-07-17'
-modified: '2026-07-21'
+modified: '2026-10-06'
 image: https://www.skyhighsecurity.com/content/dam/skyhigh/global/logos/skyhigh-security-logo.svg
 tags:
 - Company
@@ -73,6 +73,10 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- url: https://www.skyhighsecurity.com/about/newsroom/blogs.html
+  type: Blog
+- url: https://www.skyhighsecurity.com/feed
+  type: BlogRSS
 - type: CapabilityMap
   url: capabilities/skyhigh-capability-edges.yml
   name: Skyhigh Security Business Capability Map
