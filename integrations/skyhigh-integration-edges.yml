@@ -1,0 +1,24 @@
+generated: '2026-10-14'
+method: searched
+checked:
+- crowdstrike/integrations/crowdstrike-integration-edges.yml
+source:
+- crowdstrike/integrations/crowdstrike-integration-edges.yml
+edges:
+- partner_name: CrowdStrike (own)
+  partner: crowdstrike
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://marketplace.crowdstrike.com/listings/skyhigh-private-access/
+  mirror_of: crowdstrike/integrations/crowdstrike-integration-edges.yml
+  apps:
+  - Skyhigh Private Access
+  - Skyhigh Security Data Connector
+  listing_count: 2
+  detected: '2026-10-14'
+  detected_by: mirror-platform-listings.py
