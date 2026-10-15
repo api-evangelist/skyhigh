@@ -15,3 +15,42 @@
   relationship: platform-app
   status: not-a-workflow
   arazzo: null
+- slug: skyhigh-fedramp
+  label: FedRAMP
+  partner_name: FedRAMP
+  category: FedRAMP authorization
+  type: contract
+  channel: regulator-register
+  evidence: https://marketplace.fedramp.gov/products/F1506096710
+  source: edge
+  relationship: standard-participant
+  contract_reference:
+    register: FedRAMP Marketplace data (github.com/18F/fedramp-data data/data.json @4b73d9247f)
+    standard: FedRAMP
+    spec_file: null
+    role: fedramp-authorized
+    registered_name: Skyhigh Security
+    register_id: F1506096710
+    matched_domain: skyhighsecurity.com
+    matched_by: domain
+    domain_source: website
+    designations:
+    - Compliant
+    packages:
+    - Security Service Edge (Formerly McAfee MVISION)
+    service_models:
+    - SaaS
+    paths:
+    - JAB
+    signal_note: certified_products = one entry per AUTHORIZED impact level, never per package; packages, service
+      models, paths and leveraging agencies are context, never counted. The register lists current designations
+      only (revoked / expired are removed), so lapsed is always false
+    detected_by: sweep-gov-cloud.py
+    detected: '2026-10-15'
+    certified_products:
+    - product: FedRAMP High
+      impact_level: High
+      lapsed: false
+      latest_authorization: '2020-03-31'
+  status: not-a-workflow
+  arazzo: null
