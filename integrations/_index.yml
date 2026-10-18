@@ -54,3 +54,16 @@
       latest_authorization: '2020-03-31'
   status: not-a-workflow
   arazzo: null
+- slug: skyhigh-slack-own
+  label: Slack (own)
+  partner: slack
+  partner_name: Slack (own)
+  category: Slack app
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://slack.com/marketplace/A033LC828CD-skyhighsecurity-for-enterprise
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null
