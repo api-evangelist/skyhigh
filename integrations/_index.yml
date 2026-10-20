@@ -97,3 +97,35 @@
     detected: '2026-10-20'
   status: not-a-workflow
   arazzo: null
+- slug: skyhigh-peeringdb-interconnection-register
+  label: PeeringDB (interconnection register)
+  partner_name: PeeringDB (interconnection register)
+  category: network interconnection register
+  type: register
+  channel: standard-directory
+  evidence: https://www.peeringdb.com/net/9065
+  source: edge
+  relationship: standard-participant
+  contract_reference:
+    register: PeeringDB (peeringdb.com/api net, ix, fac, org)
+    standard: null
+    spec_file: null
+    role: peeringdb-network
+    registered_name: Skyhigh Security
+    register_id: https://www.peeringdb.com/net/9065
+    matched_domain: skyhighsecurity.com
+    matched_by: domain
+    asns:
+    - 203724
+    - 205272
+    info_types:
+    - NSP
+    ix_presence: 26
+    exchanges_operated: []
+    facilities_operated: 0
+    signal_note: 'participation only: PeeringDB is self-registered by network operators; ASNs, IX presence and facility
+      counts are context, never counted'
+    detected_by: sweep-network-edge.py
+    detected: '2026-10-20'
+  status: not-a-workflow
+  arazzo: null
